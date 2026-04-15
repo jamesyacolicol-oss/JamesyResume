@@ -9,6 +9,7 @@
     --text-dim: #94a3b8;
     --accent-purple: #a855f7;
     --accent-pink: #ec4899;
+    --accent-teal: #2dd4bf;
 }
 
 * {
@@ -28,7 +29,7 @@ body {
     background-image:
         radial-gradient(circle at 15% 25%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 85% 75%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 70%);
+        radial-gradient(circle at 50% 50%, rgba(45, 212, 191, 0.05) 0%, transparent 70%);
     background-attachment: fixed;
     line-height: 1.6;
     overflow-x: hidden;
@@ -126,7 +127,7 @@ h1::after {
     50% { width: 120px; opacity: 1; }
 }
 
-/* Showcase Grid - Centered Layout */
+/* Showcase Grid - Centered Single Column */
 .showcase-grid {
     display: flex;
     flex-direction: column;
@@ -135,52 +136,55 @@ h1::after {
     align-items: center;
 }
 
-.admin-wrapper {
+.photo-wrapper {
     width: 100%;
-    max-width: 900px;
+    max-width: 700px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    cursor: pointer;
     position: relative;
 }
 
-.web-mockup {
+.arduino-photo {
     width: 100%;
-    background: #0f172a;
     border-radius: 20px;
+    overflow: hidden;
     border: 2px solid var(--border-white);
     box-shadow: 
-        0 30px 60px rgba(0, 0, 0, 0.6),
+        0 25px 60px rgba(0, 0, 0, 0.6),
         0 0 30px rgba(168, 85, 247, 0.1);
-    overflow: hidden;
     position: relative;
     transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    animation: webFloat 5s ease-in-out infinite;
+    animation: photoFloat 5s ease-in-out infinite;
 }
 
-@keyframes webFloat {
+.photo-wrapper:nth-child(2) .arduino-photo {
+    animation-delay: -1.5s;
+    animation-duration: 5.5s;
+}
+
+@keyframes photoFloat {
     0%, 100% { 
         transform: translateY(0px);
         box-shadow: 
-            0 30px 60px rgba(0, 0, 0, 0.6),
+            0 25px 60px rgba(0, 0, 0, 0.6),
             0 0 30px rgba(168, 85, 247, 0.1);
     }
     50% { 
         transform: translateY(-12px);
         box-shadow: 
-            0 40px 80px rgba(0, 0, 0, 0.7),
+            0 35px 70px rgba(0, 0, 0, 0.7),
             0 0 50px rgba(168, 85, 247, 0.2);
     }
 }
 
 /* Glowing border effect */
-.web-mockup::before {
+.arduino-photo::before {
     content: '';
     position: absolute;
     inset: -3px;
     border-radius: 22px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.4));
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(45, 212, 191, 0.4), rgba(168, 85, 247, 0.4));
     z-index: -1;
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -192,63 +196,28 @@ h1::after {
     50% { opacity: 0.5; }
 }
 
-.web-mockup:hover {
-    transform: translateY(-8px) scale(1.01);
+.arduino-photo:hover {
+    transform: translateY(-8px) scale(1.02);
     box-shadow: 
-        0 45px 90px rgba(0, 0, 0, 0.8),
-        0 0 60px rgba(168, 85, 247, 0.3);
-    border-color: rgba(168, 85, 247, 0.4);
+        0 35px 70px rgba(0, 0, 0, 0.7),
+        0 0 50px rgba(168, 85, 247, 0.25);
+    border-color: rgba(168, 85, 247, 0.3);
 }
 
-.web-mockup:hover::before {
+.arduino-photo:hover::before {
     opacity: 1;
 }
 
-.web-header {
-    height: 36px;
-    background: #1e293b;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    gap: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #4b5563;
-    transition: all 0.3s ease;
-}
-
-.web-mockup:hover .dot:nth-child(1) {
-    background: #ef4444;
-    box-shadow: 0 0 12px #ef4444;
-    transform: scale(1.2);
-}
-
-.web-mockup:hover .dot:nth-child(2) {
-    background: #f59e0b;
-    box-shadow: 0 0 12px #f59e0b;
-    transform: scale(1.2);
-}
-
-.web-mockup:hover .dot:nth-child(3) {
-    background: #10b981;
-    box-shadow: 0 0 12px #10b981;
-    transform: scale(1.2);
-}
-
-.web-mockup img {
+.arduino-photo img {
     width: 100%;
+    height: 400px;
+    object-fit: cover;
     display: block;
     transition: transform 0.5s ease;
 }
 
-.web-mockup:hover img {
-    transform: scale(1.02);
-    filter: contrast(1.05) brightness(1.05);
+.arduino-photo:hover img {
+    transform: scale(1.03);
 }
 
 /* Label with shine effect */
@@ -279,16 +248,15 @@ h1::after {
     transition: left 0.6s ease;
 }
 
-.admin-wrapper:hover .label {
+.photo-wrapper:hover .label {
     background: var(--grad-primary);
     color: #fff;
     border-color: transparent;
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(168, 85, 247, 0.4);
-    letter-spacing: 3px;
 }
 
-.admin-wrapper:hover .label::before {
+.photo-wrapper:hover .label::before {
     left: 100%;
 }
 
@@ -428,7 +396,7 @@ h2::after {
 /* Development Stack - Horizontal Layout */
 .stack-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     position: relative;
     z-index: 1;
@@ -438,10 +406,11 @@ h2::after {
     background: rgba(255,255,255,0.02);
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: 16px;
-    padding: 1.2rem;
+    padding: 1.5rem 1.2rem;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
+    text-align: center;
     position: relative;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -453,7 +422,7 @@ h2::after {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 3px;
     background: var(--grad-primary);
     transform: scaleX(0);
     transform-origin: left;
@@ -467,19 +436,19 @@ h2::after {
 .spec-item:hover {
     background: rgba(168, 85, 247, 0.08);
     border-color: rgba(168, 85, 247, 0.3);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
 }
 
 .spec-item span:first-child {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-dim);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 .spec-item span:last-child {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     color: var(--accent-purple);
     font-weight: 700;
     transition: all 0.3s ease;
@@ -522,10 +491,22 @@ footer {
     animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
+.photo-wrapper:nth-child(1).reveal.active {
+    animation-delay: 0.1s;
+}
+
+.photo-wrapper:nth-child(2).reveal.active {
+    animation-delay: 0.2s;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-    .web-mockup {
-        max-width: 100%;
+    .showcase-grid {
+        gap: 1.5rem;
+    }
+
+    .arduino-photo img {
+        height: 280px;
     }
 
     .stack-grid {
@@ -546,6 +527,10 @@ footer {
         font-size: 2rem;
     }
 
+    .arduino-photo img {
+        height: 220px;
+    }
+
     .glass-card {
         padding: 1.5rem;
     }
@@ -553,5 +538,13 @@ footer {
     h2 {
         font-size: 0.75rem;
         letter-spacing: 3px;
+    }
+
+    .spec-item {
+        padding: 1.2rem 1rem;
+    }
+
+    .spec-item span:last-child {
+        font-size: 1rem;
     }
 }
